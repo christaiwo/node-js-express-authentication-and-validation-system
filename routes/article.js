@@ -1,11 +1,9 @@
-const { create, index } = require('../controller/article');
-
-const express = require('express');
+import express from "express"
+import { createArticle, destroyArticle, indexArticle, showArticle, updateArticle } from '../controller/article.js';
 
 const articleRouter = express.Router();
 
+articleRouter.route('/').get(indexArticle).post(createArticle);
+articleRouter.route('/:id').get(showArticle).put(updateArticle).delete(destroyArticle);
 
-articleRouter.route('/').get(index).post(create);
-
-
-module.exports = articleRouter;
+export default articleRouter;

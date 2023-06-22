@@ -1,43 +1,141 @@
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
+
+export const indexArticle = async (req, res) => {
+    const articles = await prisma.article.findMany({
+        include:{
+            author: true
+        }
+    });
 
 
-const index = (req, res) => {
-
-    res.status(200).json({
-        message: "it worked"
+    return res.status(200).json({
+        articles
     })
 }
 
-const create = (req, res) => {
+export const createArticle = async (req, res) => {
+    const { title, content } = req.body;
 
+    const article = await prisma.article.create({
+        include:{
+            author: true
+        },
+        data:{
+            title: title,
+            content: content
+        }
+    });
+    return res.status(200).json({
+        article,
+    })
+}
+
+
+export const showArticle = async (req, res) => {
+    const { id } = req.params;
+
+    const article = await prisma.article.findUnique({
+        where: {
+            id:parseInt(id)
+        },
+        include:{
+            author: true
+        }
+    })
+
+    if(!article){
+        return res.status(404).json({
+            error: "article not found",
+        })
+    }
+
+    return res.status(200).json({
+        article,
+    })
     
-    res.status(200).json({
-        message: req.body
+}
+
+
+export const updateArticle = async (req, res) => {
+    const { id } = req.params;
+    const { title, content } = req.body;
+
+    const article = await prisma.article.findUnique({
+        where: {
+            id:parseInt(id)
+        },
+        include:{
+            author: true
+        }
+    })
+
+    if(!article){
+        return res.status(404).json({
+            error: "article not found",
+        })
+    }
+
+    // check authenticated user
+    if(article.authorId !== req.userId){
+        return res.status(403).json({
+            error: "You do not have permission to update this article",
+        })
+    }
+
+    const updatedArticle = await prisma.article.update({
+        where:{
+            id: parseInt(id)
+        },
+        data:{
+            title: title,
+            content: content
+        },
+        include:{
+            author: true
+        }
+    })
+
+    return res.status(200).json({
+        article: updatedArticle
     })
 }
 
 
-const show = (req, res) => {
-    res.status(200).json({
-        message: "it worked"
+export const destroyArticle = async (req, res) => {
+    const { id } = req.params;
+
+    const article = await prisma.article.findUnique({
+        where: {
+            id:parseInt(id)
+        },
+        include:{
+            author: true
+        }
     })
-}
 
+    if(!article){
+        return res.status(404).json({
+            error: "article not found",
+        })
+    }
 
-const update = (req, res) => {
-    res.status(200).json({
-        message: "it worked"
+    // check authenticated user
+    if(article.authorId !== req.userId){
+        return res.status(403).json({
+            error: "You do not have permission to delete this article",
+        })
+    }
+
+    await prisma.article.delete({
+        where:{
+            id: parseInt(id)
+        }
     })
-}
 
-
-const destroy = (req, res) => {
-    res.status(200).json({
-        message: "it worked"
+    return res.status(204).json({
+        message: "Article deleted successfully",
     })
-}
-
-module.exports = {
-    index,
-    create
 }
 
