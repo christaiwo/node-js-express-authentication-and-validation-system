@@ -1,5 +1,5 @@
 import express from "express";
-import articleRouter from "./routes/articleRoute.js";
+import articleRoute from "./routes/articleRoute.js";
 import { PrismaClient } from "@prisma/client";
 
 
@@ -11,7 +11,7 @@ const prisma = new PrismaClient();
 app.use(express.json());
 app.use(express.urlencoded());
 
-app.use('/api/v1/article', articleRouter);
+app.use('/api/v1/article', articleRoute);
 
 
 const port = 3000;

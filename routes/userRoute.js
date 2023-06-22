@@ -1,6 +1,6 @@
 const express = require('express');
 
-const router = express.Router();
+const userRoute = express.Router();
 
 
-export default router;
+export default userRoute;
