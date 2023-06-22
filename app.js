@@ -1,5 +1,5 @@
 import express from "express";
-import articleRouter from "./routes/article.js";
+import articleRouter from "./routes/articleRoute.js";
 import { PrismaClient } from "@prisma/client";
 
 
