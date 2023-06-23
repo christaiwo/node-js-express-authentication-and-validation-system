@@ -1,5 +1,5 @@
 {
-  "name": "test",
+  "name": "node-js-express-authentication-and-validation-system",
   "type": "module",
   "version": "1.0.0",
   "description": "",
@@ -9,6 +9,8 @@
     "dev": "nodemon start app.js"
   },
   "author": "Taiwo Ijagbemi",
+  "git": "https://github.com/christaiwo",
+  "git_remote_url": "https://github.com/christaiwo/node-js-express-authentication-and-validation-system",
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^4.16.0",
