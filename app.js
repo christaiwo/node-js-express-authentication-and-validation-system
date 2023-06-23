@@ -9,7 +9,7 @@ const prisma = new PrismaClient();
 
 
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/v1/user', userRoute);
 app.use('/api/v1/article', articleRoute);
