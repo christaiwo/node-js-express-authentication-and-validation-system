@@ -1,6 +1,7 @@
-import { destroyUser, getAllUser, getUser, loginUser, registerUser, updateUser } from '../controller/userController';
+import { destroyUser, getAllUser, getUser, loginUser, registerUser, updateUser } from '../controller/userController.js';
+import { authenticatedToken } from '../middleware/verifyToken.js';
 
-const express = require('express');
+import express from "express";
 
 const userRoute = express.Router();
 
@@ -8,8 +9,8 @@ const userRoute = express.Router();
 userRoute.route('/register').post(registerUser);
 userRoute.route('/login').post(loginUser);
 
-userRoute.route('/').get(getUser);
-userRoute.route('/:id').put(updateUser).delete(destroyUser);
+userRoute.route('/').get(authenticatedToken, getUser);
+userRoute.route('/:id').put(authenticatedToken, updateUser).delete(authenticatedToken, destroyUser);
 
 userRoute.route('/users/all').get(getAllUser);
 

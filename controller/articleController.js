@@ -24,7 +24,8 @@ export const createArticle = async (req, res) => {
         },
         data:{
             title: title,
-            content: content
+            content: content,
+            authorId: req.userId
         }
     });
     return res.status(200).json({

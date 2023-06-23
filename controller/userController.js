@@ -118,7 +118,7 @@ export const updateUser = async (req, res) => {
     }
 
     // check authenticated user
-    if(id !== user.id){
+    if(parseInt(id) !== user.id){
         return res.status(403).json({
             error: "You do not have permission to update this account",
         })
@@ -156,7 +156,7 @@ export const destroyUser = async (req, res) => {
     }
 
     // check authenticated user
-    if(id !== user.id){
+    if(parseInt(id) !== user.id){
         return res.status(403).json({
             error: "You do not have permission to delete this account",
         })
