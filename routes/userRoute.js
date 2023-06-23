@@ -5,12 +5,13 @@ import express from "express";
 
 const userRoute = express.Router();
 
+userRoute.use(['/','/:id'], authenticatedToken);
 
 userRoute.route('/register').post(registerUser);
 userRoute.route('/login').post(loginUser);
 
-userRoute.route('/').get(authenticatedToken, getUser);
-userRoute.route('/:id').put(authenticatedToken, updateUser).delete(authenticatedToken, destroyUser);
+userRoute.route('/').get(getUser);
+userRoute.route('/:id').put(updateUser).delete(destroyUser);
 
 userRoute.route('/users/all').get(getAllUser);
 
