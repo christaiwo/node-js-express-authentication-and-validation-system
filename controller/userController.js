@@ -175,5 +175,14 @@ export const destroyUser = async (req, res) => {
 
 
 export const getAllUser = async (req, res) => {
+    const users = await prisma.user.findMany({
+        include:{
+            articles: true
+        }
+    });
 
+
+    return res.status(200).json({
+        users
+    })
 } 
